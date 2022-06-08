@@ -10,9 +10,12 @@ import {
   faCircleXmark,
   faSpinner,
   faMagnifyingGlass,
+  faSign,
+  faSignIn,
 } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../AccountItem";
+import Button from "../Button";
 const cx = classNames.bind(style);
 
 const Header = () => {
@@ -50,7 +53,10 @@ const Header = () => {
             </button>
           </div>
         </Tippy>
-        <div className={cx("action")}></div>
+        <div className={cx("action")}>
+          <Button text>Upload</Button>
+          <Button primary>Login</Button>
+        </div>
       </div>
     </header>
   );

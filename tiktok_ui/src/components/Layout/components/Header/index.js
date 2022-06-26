@@ -12,11 +12,32 @@ import {
   faMagnifyingGlass,
   faSign,
   faSignIn,
+  faEllipsisVertical,
+  faEarthAsia,
+  faCircleQuestion,
+  faKeyboard,
 } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../AccountItem";
 import Button from "../Button";
+import Menu from "../Popper/Menu";
 const cx = classNames.bind(style);
+
+const MENU_ITEMS = [
+  {
+    icon: <FontAwesomeIcon icon={faEarthAsia}></FontAwesomeIcon>,
+    title: "English",
+  },
+  {
+    icon: <FontAwesomeIcon icon={faCircleQuestion}></FontAwesomeIcon>,
+    title: "Feedback and help",
+    to: "/feedback",
+  },
+  {
+    icon: <FontAwesomeIcon icon={faKeyboard}></FontAwesomeIcon>,
+    title: "Keyboard shortcuts",
+  },
+];
 
 const Header = () => {
   const [searchResult, setSearchReasult] = useState([]);
@@ -56,6 +77,12 @@ const Header = () => {
         <div className={cx("action")}>
           <Button text>Upload</Button>
           <Button primary>Login</Button>
+
+          <Menu items={MENU_ITEMS}>
+            <button className={cx("more-btn")}>
+              <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
+            </button>
+          </Menu>
         </div>
       </div>
     </header>

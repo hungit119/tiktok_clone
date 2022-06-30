@@ -26,6 +26,8 @@ import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../AccountItem";
 import Button from "../Button";
 import Menu from "../Popper/Menu";
+import { InboxIcon, MessageIcon, SearchIcon, UploadIcon } from "../Icons";
+import Image from "~/components/Layout/components/Image";
 const cx = classNames.bind(style);
 
 const MENU_ITEMS = [
@@ -65,9 +67,7 @@ const Header = () => {
   const [searchResult, setSearchReasult] = useState([]);
 
   // Handle logic
-  const handleMenuChange = (menuItem) => {
-    console.log(menuItem);
-  };
+  const handleMenuChange = (menuItem) => {};
 
   const userMenu = [
     {
@@ -123,35 +123,45 @@ const Header = () => {
             <FontAwesomeIcon className={cx("spinner")} icon={faSpinner} />
 
             <button className={cx("search-btn")} tabIndex={-1}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              <SearchIcon width="2.4rem" height="2.4rem" />
             </button>
           </div>
         </HeadLessTippy>
         <div className={cx("actions")}>
           {currentUser ? (
-            <>
-              <Tippy delay={[0, 200]} content="Upload Video" placement="bottom">
+            <React.Fragment>
+              <Tippy content="Upload video" placement="bottom">
                 <button className={cx("actions-btn")}>
-                  <FontAwesomeIcon icon={faCloudArrowUp} />
+                  <UploadIcon />
                 </button>
               </Tippy>
-            </>
+              <Tippy content="Message" placement="bottom">
+                <button className={cx("actions-btn")}>
+                  <MessageIcon width="2.8rem" height="2.8rem" />
+                </button>
+              </Tippy>
+              <Tippy content="Inbox" placement="bottom">
+                <button className={cx("actions-btn")}>
+                  <InboxIcon />
+                </button>
+              </Tippy>
+            </React.Fragment>
           ) : (
-            <>
+            <React.Fragment>
               <Button text>Upload</Button>
               <Button primary>Login</Button>
-            </>
+            </React.Fragment>
           )}
           <Menu
             items={currentUser ? userMenu : MENU_ITEMS}
             onChange={handleMenuChange}
           >
             {currentUser ? (
-              <img
+              <Image
                 className={cx("user-avatar")}
                 src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/f75993e97bd5424690cb3c702fc88b0d~c5_100x100.jpeg?x-expires=1656493200&x-signature=DVFdvHmSmiBJESqslN3UBmqTois%3D"
                 alt="Nguyen Van A"
-              ></img>
+              ></Image>
             ) : (
               <button className={cx("more-btn")}>
                 <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>

@@ -7,6 +7,9 @@ import AccountItem from "../AccountItem";
 import { SearchIcon } from "../Icons";
 import { Wrapper as PopperWrapper } from "../Popper";
 import style from "./Search.module.scss";
+import { useDeBounce } from "~/hooks";
+import axios from "axios";
+
 const cx = classNames.bind(style);
 function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -14,6 +17,8 @@ function Search() {
 
   const [showResult, setShowResult] = useState(true);
   const [showLoading, setShowLoading] = useState(false);
+
+  const debounce = useDeBounce(searchValue, 500);
 
   const inputRef = useRef();
 
@@ -27,25 +32,26 @@ function Search() {
   };
 
   useEffect(() => {
-    if (!searchValue.trim()) {
+    if (!debounce.trim()) {
       setSearchResult([]);
       return;
     }
     setShowLoading(true);
-    fetch(
-      `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-        searchValue
-      )}&type=less`
-    )
-      .then((res) => res.json())
+    axios
+      .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
+        params: {
+          q: debounce,
+          type: "less",
+        },
+      })
       .then((res) => {
-        setSearchResult(res.data);
+        setSearchResult(res.data.data);
         setShowLoading(false);
       })
       .catch(() => {
         setShowLoading(true);
       });
-  }, [searchValue]);
+  }, [debounce]);
 
   return (
     <HeadLessTippy

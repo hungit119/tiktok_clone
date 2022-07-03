@@ -1,33 +1,27 @@
+import React from "react";
 import style from "./Header.module.scss";
-import React, { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import classNames from "classnames/bind";
-import HeadLessTippy from "@tippyjs/react/headless";
-import Tippy from "@tippyjs/react/";
-import image from "~/assets/images";
-import "tippy.js/dist/tippy.css";
 import {
-  faCircleXmark,
-  faSpinner,
-  faMagnifyingGlass,
-  faEllipsisVertical,
-  faEarthAsia,
   faCircleQuestion,
-  faKeyboard,
-  faCloudArrowUp,
-  faUser,
   faCoins,
+  faEarthAsia,
+  faEllipsisVertical,
   faGear,
+  faKeyboard,
   faSignOut,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { Wrapper as PopperWrapper } from "../Popper";
-import AccountItem from "../AccountItem";
-import Button from "../Button";
-import Menu from "../Popper/Menu";
-import { InboxIcon, MessageIcon, SearchIcon, UploadIcon } from "../Icons";
+import Tippy from "@tippyjs/react/";
+import classNames from "classnames/bind";
+import "tippy.js/dist/tippy.css";
+import image from "~/assets/images";
 import Image from "~/components/Layout/components/Image";
+import Button from "../Button";
+import { InboxIcon, MessageIcon, UploadIcon } from "../Icons";
+import Menu from "../Popper/Menu";
+import Search from "../Search";
 const cx = classNames.bind(style);
 
 const MENU_ITEMS = [
@@ -64,8 +58,6 @@ const MENU_ITEMS = [
 const currentUser = true;
 
 const Header = () => {
-  const [searchResult, setSearchReasult] = useState([]);
-
   // Handle logic
   const handleMenuChange = (menuItem) => {};
 
@@ -100,33 +92,9 @@ const Header = () => {
         <div className={cx("logo")}>
           <img src={image.logo} alt="logo" />
         </div>
-        <HeadLessTippy
-          interactive={true}
-          visible={searchResult.length > 0}
-          render={(attr) => (
-            <div className={cx("search-result")} tabIndex={-1} {...attr}>
-              <PopperWrapper>
-                <h4 className={cx("search-title")}>Account</h4>
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-              </PopperWrapper>
-            </div>
-          )}
-        >
-          <div className={cx("search")}>
-            <input placeholder="Search account and video" />
-            <button className={cx("clear")}>
-              <FontAwesomeIcon icon={faCircleXmark} />
-            </button>
-            <FontAwesomeIcon className={cx("spinner")} icon={faSpinner} />
+        {/* Search */}
+        <Search />
 
-            <button className={cx("search-btn")} tabIndex={-1}>
-              <SearchIcon width="2.4rem" height="2.4rem" />
-            </button>
-          </div>
-        </HeadLessTippy>
         <div className={cx("actions")}>
           {currentUser ? (
             <React.Fragment>
@@ -143,6 +111,7 @@ const Header = () => {
               <Tippy content="Inbox" placement="bottom">
                 <button className={cx("actions-btn")}>
                   <InboxIcon />
+                  <span className={cx("badge")}>12</span>
                 </button>
               </Tippy>
             </React.Fragment>

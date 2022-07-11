@@ -31,6 +31,13 @@ function Search() {
   const handleHideResult = () => {
     setShowResult(false);
   };
+  const handleChange = (e) => {
+    const searchValue = e.target.value;
+
+    if (!searchValue.startsWith(" ")) {
+      setSearchValue(searchValue);
+    }
+  };
 
   useEffect(() => {
     if (!debounce.trim()) {
@@ -68,7 +75,7 @@ function Search() {
           ref={inputRef}
           value={searchValue}
           placeholder="Search account and video"
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={handleChange}
           onFocus={() => setShowResult(true)}
         />
         {!!searchValue && !showLoading && (
@@ -80,7 +87,13 @@ function Search() {
           <FontAwesomeIcon className={cx("loading")} icon={faSpinner} />
         )}
 
-        <button className={cx("search-btn")} tabIndex={-1}>
+        <button
+          className={cx("search-btn")}
+          tabIndex={-1}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
+        >
           <SearchIcon width="2.4rem" height="2.4rem" />
         </button>
       </div>

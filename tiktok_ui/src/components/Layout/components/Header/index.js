@@ -1,6 +1,8 @@
 import React from "react";
 import style from "./Header.module.scss";
 
+import routes from "~/config/routes";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -22,6 +24,7 @@ import Button from "../Button";
 import { InboxIcon, MessageIcon, UploadIcon } from "../Icons";
 import Menu from "../Popper/Menu";
 import Search from "../Search";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(style);
 
 const MENU_ITEMS = [
@@ -89,9 +92,11 @@ const Header = () => {
   return (
     <header className={cx("wrapper")}>
       <div className={cx("inner")}>
-        <div className={cx("logo")}>
-          <img src={image.logo} alt="logo" />
-        </div>
+        <Link to={routes.home} className={cx("logo-link")}>
+          <div className={cx("logo")}>
+            <img src={image.logo} alt="logo" />
+          </div>
+        </Link>
         {/* Search */}
         <Search />
 

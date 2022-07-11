@@ -20,6 +20,9 @@
 }
 .logo {
 }
+.logo-link {
+  display: flex;
+}
 .custom-login {
   background-color: aqua;
 }
@@ -44,7 +47,7 @@
   font-weight: 600;
   padding: 0px 6px;
   border-radius: 10px;
-  font-family: "ProximaNova", sans-serif;
+  font-family: var(--font-family);
   height: 2rem;
   line-height: 2rem;
   top: -3px;

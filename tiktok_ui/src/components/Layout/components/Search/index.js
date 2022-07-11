@@ -9,6 +9,7 @@ import { Wrapper as PopperWrapper } from "../Popper";
 import style from "./Search.module.scss";
 import { useDeBounce } from "~/hooks";
 import axios from "axios";
+import search from "~/apiServices/searchSevice";
 
 const cx = classNames.bind(style);
 function Search() {
@@ -36,21 +37,14 @@ function Search() {
       setSearchResult([]);
       return;
     }
-    setShowLoading(true);
-    axios
-      .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
-        params: {
-          q: debounce,
-          type: "less",
-        },
-      })
-      .then((res) => {
-        setSearchResult(res.data.data);
-        setShowLoading(false);
-      })
-      .catch(() => {
-        setShowLoading(true);
-      });
+
+    const fetchApi = async () => {
+      setShowLoading(true);
+      const result = await search(debounce, "less");
+      setSearchResult(result);
+      setShowLoading(false);
+    };
+    fetchApi();
   }, [debounce]);
 
   return (

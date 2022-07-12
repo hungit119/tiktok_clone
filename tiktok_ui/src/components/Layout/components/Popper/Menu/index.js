@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Style from "./Menu.module.scss";
 import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
+import { useState } from "react";
 import { Wrapper as PopperWrapper } from "~/components/Layout/components/Popper";
-import MenuItem from "./MenuItem";
 import Header from "./Header";
+import Style from "./Menu.module.scss";
+import MenuItem from "./MenuItem";
 const cx = classNames.bind(Style);
 
 const defaultFn = () => {};
@@ -14,6 +14,7 @@ const Menu = ({
   items = [],
   hideOnClick = false,
   onChange = defaultFn,
+  ...passProps
 }) => {
   const [history, setHistory] = useState([{ data: items }]);
 
@@ -54,7 +55,7 @@ const Menu = ({
                 }}
               />
             )}
-            {renderItem()}
+            <div className={cx("menu-body")}>{renderItem()}</div>
           </PopperWrapper>
         </div>
       )}

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "~/components/Layout/components/Button";
+import Button from "~/layouts/components/Button";
 
 import Style from "./Menu.module.scss";
 import classNames from "classnames/bind";

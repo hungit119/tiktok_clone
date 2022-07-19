@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeadLessTippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
-import search from "~/apiServices/searchSevice";
+import search from "~/services/searchSevice";
 import { useDeBounce } from "~/hooks";
 import AccountItem from "../AccountItem";
 import { SearchIcon } from "../Icons";

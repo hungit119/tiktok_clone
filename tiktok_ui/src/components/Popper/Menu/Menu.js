@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
 import { useState } from "react";
-import { Wrapper as PopperWrapper } from "~/layouts/components/Popper";
+import { Wrapper as PopperWrapper } from "~/components/Popper";
 import Header from "./Header";
 import Style from "./Menu.module.scss";
 import MenuItem from "./MenuItem";
@@ -37,6 +38,24 @@ const Menu = ({
       );
     });
   };
+  const handleBack = () => {
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+  };
+
+  const renderResult = (attr) => (
+    <div className={cx("menu-list")} tabIndex="-1" {...attr}>
+      <PopperWrapper className={cx("menu-popper")}>
+        {history.length > 1 && (
+          <Header title={current.title} onBack={handleBack} />
+        )}
+        <div className={cx("menu-body")}>{renderItem()}</div>
+      </PopperWrapper>
+    </div>
+  );
+  const handleResetMenu = () => {
+    setHistory((prev) => prev.slice(0, 1));
+  };
+
   return (
     <Tippy
       interactive={true}
@@ -44,26 +63,17 @@ const Menu = ({
       delay={[0, 700]}
       offset={[12, 8]}
       hideOnClick={hideOnClick}
-      render={(attr) => (
-        <div className={cx("menu-list")} tabIndex="-1" {...attr}>
-          <PopperWrapper className={cx("menu-popper")}>
-            {history.length > 1 && (
-              <Header
-                title={"Language"}
-                onBack={() => {
-                  setHistory((prev) => prev.slice(0, prev.length - 1));
-                }}
-              />
-            )}
-            <div className={cx("menu-body")}>{renderItem()}</div>
-          </PopperWrapper>
-        </div>
-      )}
-      onHide={() => setHistory((prev) => prev.slice(0, 1))}
+      render={renderResult}
+      onHide={handleResetMenu}
     >
       {children}
     </Tippy>
   );
 };
-
+Menu.propTypes = {
+  children: PropTypes.node.isRequired,
+  items: PropTypes.array,
+  hideOnClick: PropTypes.bool,
+  onChange: PropTypes.func,
+};
 export default Menu;
